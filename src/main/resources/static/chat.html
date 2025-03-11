@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Chat</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<h2>채팅방</h2>
+<button onclick="sendMessage()">메시지 보내기</button>
+<ul id="messages"></ul>
+
+<script>
+	const socket = new SockJS("http://localhost:8080/ws-chat");
+	const stompClient = Stomp.over(socket);
+	const roomId = "room1"; // 채팅방 ID
+	const userId1 = "user1";// user ID
+
+
+	stompClient.connect({}, function (frame) {
+		console.log("WebSocket 연결 성공!");
+
+		// 1. 특정 채팅방 구독
+		stompClient.subscribe(`/topic/chat/${roomId}`, function (message) {
+			const msg = JSON.parse(message.body);// 받은 메시지
+
+			//html
+			const messageList = document.getElementById("messages");
+			const newMessage = document.createElement("li");
+
+			newMessage.innerText = `${msg.sender}: ${msg.message}`;
+			messageList.appendChild(newMessage);
+		});
+
+		//메세지 전송
+		sendMessage();
+	});
+
+	// 2. 메시지 전송
+	function sendMessage() {
+		const message = {roomId: roomId, sender: userId1, message: "안녕하세요!"};
+		stompClient.send(`/app/chat/${roomId}`, {}, JSON.stringify(message));
+	}
+
+</script>
+</body>
+</html>

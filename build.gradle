@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.3'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.webtoonmaker'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // web socket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-messaging'// Spring Boot 3.x에서 제거됨
+    implementation 'org.springframework.boot:spring-boot-starter-integration' // 메시징 관련 대체
+
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis' // Redis Pub/Sub
+    implementation 'org.redisson:redisson-spring-boot-starter:3.37.0'// 분산락
+
+    // Database
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // for Spring security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt:0.12.3'
+
+    // Kafka messaging
+    implementation 'org.springframework.kafka:spring-kafka'
+
+    // starter-web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.projectlombok:lombok'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
