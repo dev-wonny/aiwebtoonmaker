@@ -1,6 +1,6 @@
 package com.webtoonmaker.api.chat.controller;
 
-import com.webtoonmaker.api.chat.dto.ChatRoom;
+import com.webtoonmaker.api.chat.dto.ChatRoomDto;
 import com.webtoonmaker.api.chat.repositroy.ChatRoomRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +22,13 @@ public class ChatController {
 
     // 생성
     @PostMapping("/room")
-    public ResponseEntity<ChatRoom> createRoom(@RequestParam String chatRoomName) {
+    public ResponseEntity<ChatRoomDto> createRoom(@RequestParam String chatRoomName) {
         return ResponseEntity.ok(chatRoomRepository.createChatRoom(chatRoomName));
     }
 
     // 전체 조회
     @GetMapping("/rooms")
-    public ResponseEntity<List<ChatRoom>> getRooms() {
+    public ResponseEntity<List<ChatRoomDto>> getRooms() {
         return ResponseEntity.ok(chatRoomRepository.findAllRooms());
     }
 }

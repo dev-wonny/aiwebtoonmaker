@@ -1,6 +1,6 @@
 package com.webtoonmaker.api.chat.controller;
 
-import com.webtoonmaker.api.chat.dto.ChatMessage;
+import com.webtoonmaker.api.chat.dto.ChatMessageDto;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -13,7 +13,7 @@ public class StompChatController {
     // /topic/chat/{roomId}를 구독한 클라이언트들이 메시지를 받음!
     @MessageMapping("/chat/{roomId}")
     @SendTo("/topic/chat/{roomId}")
-    public ChatMessage sendMessage(@DestinationVariable String roomId, ChatMessage message) {
+    public ChatMessageDto sendMessage(@DestinationVariable String roomId, ChatMessageDto message) {
         return message;  // /topic/chat/{roomId}에 메시지를 전송
     }
 }
