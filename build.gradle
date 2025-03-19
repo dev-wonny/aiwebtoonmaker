@@ -26,8 +26,13 @@ repositories {
 dependencies {
     // web socket
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    implementation 'org.springframework.boot:spring-boot-messaging'// Spring Boot 3.x에서 제거됨
-    implementation 'org.springframework.boot:spring-boot-starter-integration' // 메시징 관련 대체
+//    implementation 'org.springframework.boot:spring-boot-messaging'// Spring Boot 3.x에서 제거됨
+//    implementation 'org.springframework.boot:spring-boot-starter-integration' // 메시징 관련 대체
+//    implementation 'org.springframework:spring-messaging'
+
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
 
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis' // Redis Pub/Sub
