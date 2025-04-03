@@ -1,9 +1,7 @@
 package com.webtoonmaker.api.chat.presentation.controller;
 
-import com.webtoonmaker.api.chat.application.dto.UserDto;
 import com.webtoonmaker.api.chat.application.service.UserService;
 import com.webtoonmaker.api.chat.domain.entity.UsersEntity;
-import com.webtoonmaker.api.chat.domain.enums.UserRoleEnum;
 import com.webtoonmaker.api.chat.presentation.request.UserCreateRequest;
 import com.webtoonmaker.api.chat.presentation.request.UserUpdateRequest;
 import jakarta.validation.Valid;
@@ -34,18 +32,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UsersEntity> createUser(@Valid @RequestBody UserCreateRequest req) {
         return ResponseEntity.ok(userService.createUser(
-                UserDto.of(
-                    null
-                    , req.getEmail()
-                    , req.getPassword()
-                    , req.getPassword()
-                    , req.getPhoneNumber()
-                    , UserRoleEnum.getRoleEnum(req.getRole())
-                    , req.isBlock()
-                    , req.getZipCode()
-                    , req.getAddress1()
-                    , req.getAddress2()
-                )
+                req.toDto()
             )
         );
     }
@@ -58,19 +45,9 @@ public class UserController {
 
     //수정
     @PutMapping("/{userId}")
-    public ResponseEntity<UsersEntity> updateUser(@PathVariable UUID userId,
-                                                  @Valid @RequestBody UserUpdateRequest req) {
+    public ResponseEntity<UsersEntity> updateUser(@PathVariable UUID userId, @Valid @RequestBody UserUpdateRequest req) {
         return ResponseEntity.ok(userService.updateUser(userId
-                , UserDto.of(userId
-                    , req.getEmail()
-                    , req.getPassword()
-                    , req.getPassword()
-                    , req.getPhoneNumber()
-                    , UserRoleEnum.getRoleEnum(req.getRole())
-                    , req.isBlock()
-                    , req.getZipCode()
-                    , req.getAddress1()
-                    , req.getAddress2())
+                , req.toDto()
             )
         );
     }
