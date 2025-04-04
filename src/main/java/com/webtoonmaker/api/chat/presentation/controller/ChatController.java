@@ -28,13 +28,13 @@ public class ChatController {
     // 채팅방 생성
     @PostMapping("/room")
     public ResponseEntity<ChatRoomDto> createRoom(@RequestParam String chatRoomName) {
-        return ResponseEntity.ok(chatRoomRepository.createChatRoom(chatRoomName));
+        return ResponseEntity.ok(null);
     }
 
     // 채팅방 전체 조회
     @GetMapping("/rooms")
     public ResponseEntity<List<ChatRoomDto>> getRooms() {
-        return ResponseEntity.ok(chatRoomRepository.findAllRooms());
+        return ResponseEntity.ok(null);
     }
 
     // 메세지 보내기

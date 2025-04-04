@@ -1,10 +1,11 @@
 package com.webtoonmaker.api.chat.presentation.controller;
 
 import com.webtoonmaker.api.chat.application.service.UserService;
-import com.webtoonmaker.api.chat.domain.entity.UsersEntity;
 import com.webtoonmaker.api.chat.presentation.request.UserCreateRequest;
 import com.webtoonmaker.api.chat.presentation.request.UserUpdateRequest;
+import com.webtoonmaker.api.chat.presentation.response.UserResponseDto;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,26 +31,21 @@ public class UserController {
 
     //생성
     @PostMapping
-    public ResponseEntity<UsersEntity> createUser(@Valid @RequestBody UserCreateRequest req) {
-        return ResponseEntity.ok(userService.createUser(
-                req.toDto()
-            )
-        );
+    public ResponseEntity<String> createUser(@Valid @RequestBody UserCreateRequest req) {
+        UserResponseDto user = userService.createUser(req.toDto());
+        return new ResponseEntity<>(user.getEmail(), HttpStatus.OK);
     }
 
     //조회
     @GetMapping("/{userId}")
-    public ResponseEntity<UsersEntity> getUser(@PathVariable UUID userId) {
+    public ResponseEntity<UserResponseDto> getUser(@PathVariable UUID userId) {
         return ResponseEntity.ok(userService.getUser(userId));
     }
 
     //수정
     @PutMapping("/{userId}")
-    public ResponseEntity<UsersEntity> updateUser(@PathVariable UUID userId, @Valid @RequestBody UserUpdateRequest req) {
-        return ResponseEntity.ok(userService.updateUser(userId
-                , req.toDto()
-            )
-        );
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable UUID userId, @Valid @RequestBody UserUpdateRequest req) {
+        return ResponseEntity.ok(userService.updateUser(userId, req.toDto()));
     }
 
     //삭제

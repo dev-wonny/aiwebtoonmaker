@@ -14,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -44,7 +45,7 @@ public class ChatRoomsEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "room_type", nullable = false)
-    private ChatTypeEnum room_type;
+    private ChatTypeEnum roomType;
 
     //종속, 저장X
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.REMOVE)
@@ -53,4 +54,47 @@ public class ChatRoomsEntity extends BaseEntity {
     //종속, 저장X
     @OneToMany(mappedBy = "ChatMessagesEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ChatMessagesEntity> chatMessages = new ArrayList<>();
+
+    @Builder
+    private ChatRoomsEntity(
+        UUID chatRoomId
+        , String chatRoomName
+        , UsersEntity ownerId
+        , ChatTypeEnum roomType
+        , List<ChatRoomParticipantsEntity> chatParticipants
+        , List<ChatMessagesEntity> chatMessages
+    ) {
+        this.chatRoomId = chatRoomId;
+        this.chatRoomName = chatRoomName;
+        this.ownerId = ownerId;
+        this.roomType = roomType;
+        this.chatParticipants = chatParticipants;
+        this.chatMessages = chatMessages;
+    }
+
+    public static ChatRoomsEntity create(
+        UUID chatRoomId
+        , String chatRoomName
+        , UsersEntity ownerId
+        , ChatTypeEnum roomType
+    ) {
+        return ChatRoomsEntity.builder()
+            .chatRoomId(chatRoomId)
+            .chatRoomName(chatRoomName)
+            .ownerId(ownerId)
+            .roomType(roomType)
+            .build();
+    }
+
+    public void updateChatRoomInfo(
+        UUID chatRoomId
+        , String chatRoomName
+        , UsersEntity ownerId
+        , ChatTypeEnum roomType
+    ) {
+        this.chatRoomId = chatRoomId;
+        this.chatRoomName = chatRoomName;
+        this.ownerId = ownerId;
+        this.roomType = roomType;
+    }
 }
