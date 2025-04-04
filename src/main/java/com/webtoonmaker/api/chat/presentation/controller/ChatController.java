@@ -3,7 +3,7 @@ package com.webtoonmaker.api.chat.presentation.controller;
 import com.webtoonmaker.api.chat.application.dto.ChatRoomDto;
 import com.webtoonmaker.api.chat.application.repository.ChatRoomRepository;
 import com.webtoonmaker.api.chat.application.service.ChatService;
-import com.webtoonmaker.api.chat.presentation.request.ChatMessageRequest;
+import com.webtoonmaker.api.chat.presentation.request.ChatMessageCreateRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,8 +39,8 @@ public class ChatController {
 
     // 메세지 보내기
     @PostMapping("/send")
-    public ResponseEntity<Void> sendMessage(@RequestBody ChatMessageRequest req) {
-        chatService.sendMessage(req.getRoomId(), req.getSenderId(), req.getContent(), req.getMessageType());
+    public ResponseEntity<Void> sendMessage(@RequestBody ChatMessageCreateRequest req) {
+        chatService.sendMessage(req.toDto());
         return ResponseEntity.ok().build();
     }
 }

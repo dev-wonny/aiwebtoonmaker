@@ -39,7 +39,7 @@ public class ChatMessagesEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "message_type", nullable = false)
-    private MessageTypeEnum message_type;
+    private MessageTypeEnum messageType;
 
     @Builder
     private ChatMessagesEntity(
@@ -47,13 +47,13 @@ public class ChatMessagesEntity extends BaseEntity {
         , UUID chatRoomId
         , UUID senderId
         , String content
-        , MessageTypeEnum message_type
+        , MessageTypeEnum messageType
     ) {
         this.chatMessageId = chatMessageId;
         this.chatRoomId = chatRoomId;
         this.senderId = senderId;
         this.content = content;
-        this.message_type = message_type;
+        this.messageType = messageType;
     }
 
 
@@ -62,14 +62,14 @@ public class ChatMessagesEntity extends BaseEntity {
         , UUID chatRoomId
         , UUID senderId
         , String content
-        , MessageTypeEnum message_type
+        , MessageTypeEnum messageType
     ) {
         return ChatMessagesEntity.builder()
             .chatMessageId(chatMessageId)
             .chatRoomId(chatRoomId)
             .senderId(senderId)
             .content(content)
-            .message_type(message_type)
+            .messageType(messageType)
             .build();
     }
 }

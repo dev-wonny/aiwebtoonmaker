@@ -7,10 +7,12 @@ import com.webtoonmaker.api.chat.domain.entity.UsersEntity;
 import com.webtoonmaker.api.chat.presentation.response.ChatRoomResponseDto;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
 @Service
+@Transactional
 public class ChatRoomService {
 
     private final ChatRoomRepository chatRoomRepository;
@@ -38,6 +40,7 @@ public class ChatRoomService {
         return ChatRoomResponseDto.fromChatRoom(chatRoom);
     }
 
+    @Transactional(readOnly = true)
     public ChatRoomResponseDto getChatRoom(UUID chatRoomId) {
         ChatRoomsEntity chatRoom = getChatRoomEntity(chatRoomId);
         return ChatRoomResponseDto.fromChatRoom(chatRoom);
@@ -45,12 +48,12 @@ public class ChatRoomService {
 
     public ChatRoomsEntity getChatRoomEntity(UUID chatRoomId) {
         return chatRoomRepository.findByChatRoomId(chatRoomId)
-            .orElseThrow(() -> new EntityNotFoundException("User not found"));
+            .orElseThrow(() -> new EntityNotFoundException("Chat room not found"));
     }
 
     public ChatRoomResponseDto updateChatRoom(UUID chatRoomId, ChatRoomDto dto) {
         ChatRoomsEntity chatRoom = getChatRoomEntity(chatRoomId);
-        
+
         chatRoom.updateChatRoomInfo(dto.getChatRoomId()
             , dto.getChatRoomName()
             , chatRoom.getOwnerId()

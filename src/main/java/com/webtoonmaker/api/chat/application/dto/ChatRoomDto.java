@@ -47,5 +47,4 @@ public class ChatRoomDto {
     public void createId(UUID chatRoomId) {
         this.chatRoomId = chatRoomId;
     }
-
 }
