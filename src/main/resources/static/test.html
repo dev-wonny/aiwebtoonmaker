@@ -1,0 +1,25 @@
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
+<script>
+	const socket = new SockJS("/ws-chat");
+	const stompClient = Stomp.over(socket);
+
+	stompClient.connect({}, () => {
+		console.log("Connected");
+
+		// 구독: 서버 → 클라이언트 메시지
+		stompClient.subscribe("/topic/chatroom/" + roomId, (message) => {
+			const payload = JSON.parse(message.body);
+			console.log("📨", payload);
+		});
+
+		// 전송: 클라이언트 → 서버
+		stompClient.send("/pub/chat/send", {}, JSON.stringify({
+			chatRoomId: roomId,
+			senderId: "{userId}",
+			content: "Hello!",
+			messageType: "TALK"
+		}));
+	});
+</script>

@@ -53,14 +53,4 @@ public class ChatMessageDto {
     public void createId(UUID chatMessageId) {
         this.chatMessageId = chatMessageId;
     }
-
-    public KafkaChatMessageDto toKafka() {
-        return KafkaChatMessageDto.of(
-            this.getChatMessageId()
-            , this.getChatRoomId()
-            , this.getSenderId()
-            , this.getContent()
-            , this.messageTypeEnum
-        );
-    }
 }

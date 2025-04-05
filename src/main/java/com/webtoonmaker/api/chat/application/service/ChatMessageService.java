@@ -4,6 +4,7 @@ import com.webtoonmaker.api.chat.application.dto.ChatMessageDto;
 import com.webtoonmaker.api.chat.application.repository.ChatMessageRepository;
 import com.webtoonmaker.api.chat.domain.entity.ChatMessagesEntity;
 import com.webtoonmaker.api.chat.presentation.response.ChatMessageResponseDto;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,7 @@ public class ChatMessageService {
 
     private final ChatMessageRepository chatMessageRepository;
 
-    public ChatMessageService(ChatMessageRepository chatMessageRepository) {// 여전히 컴파일 오류 @Qualifier("") 넣으라고함
+    public ChatMessageService(ChatMessageRepository chatMessageRepository) {
         this.chatMessageRepository = chatMessageRepository;
     }
 
@@ -25,7 +26,7 @@ public class ChatMessageService {
         dto.createId(chatMessageId);
 
         ChatMessagesEntity chatMessage = ChatMessagesEntity.create(
-            chatMessageId
+            dto.getChatMessageId()
             , chatRoomId
             , dto.getSenderId()
             , dto.getContent()
@@ -33,9 +34,17 @@ public class ChatMessageService {
         );
 
         // DB 저장
-        chatMessageRepository.save(chatMessage);//여기서 ChatMessageRepository 에 save 추가하라고 하고
+        chatMessageRepository.save(chatMessage);
 
-        // 카프카 보내기 추가
-        return ChatMessageResponseDto.fromMessage(chatMessage);
+        return getChatMessage(chatMessageId);
+    }
+
+    public ChatMessagesEntity getChatMessagesEntity(UUID chatMessageId) {
+        return chatMessageRepository.findById(chatMessageId)
+            .orElseThrow(() -> new EntityNotFoundException("ChatMessage not found: " + chatMessageId));
+    }
+
+    public ChatMessageResponseDto getChatMessage(UUID chatMessageId) {
+        return ChatMessageResponseDto.fromMessage(getChatMessagesEntity(chatMessageId));
     }
 }
