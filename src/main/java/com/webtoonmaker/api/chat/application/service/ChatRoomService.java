@@ -46,6 +46,10 @@ public class ChatRoomService {
         return ChatRoomResponseDto.fromChatRoom(chatRoom);
     }
 
+    public boolean isValidByChatRoomId(UUID chatRoomId) {
+        return chatRoomRepository.existsByChatRoom_ChatRoomIdAndIsDeletedFalse(chatRoomId);
+    }
+
     public ChatRoomsEntity getChatRoomEntity(UUID chatRoomId) {
         return chatRoomRepository.findByChatRoomId(chatRoomId)
             .orElseThrow(() -> new EntityNotFoundException("Chat room not found"));

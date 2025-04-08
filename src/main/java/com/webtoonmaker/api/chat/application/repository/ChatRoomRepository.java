@@ -10,6 +10,8 @@ public interface ChatRoomRepository {
     Optional<ChatRoomsEntity> save(ChatRoomsEntity entity);
 
     boolean existsByChatRoomId(UUID chatRoomId);
+    boolean existsByChatRoom_ChatRoomIdAndIsDeletedFalse(UUID chatRoomId);
+
 
     List<ChatRoomsEntity> findAll();
 

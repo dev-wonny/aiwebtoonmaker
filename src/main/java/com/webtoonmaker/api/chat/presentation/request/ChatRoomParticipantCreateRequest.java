@@ -1,6 +1,7 @@
 package com.webtoonmaker.api.chat.presentation.request;
 
 import com.webtoonmaker.api.chat.application.dto.ChatRoomParticipantDto;
+import com.webtoonmaker.api.chat.domain.enums.ParticipantStatusEnum;
 import lombok.Data;
 
 import java.util.UUID;
@@ -10,14 +11,14 @@ public class ChatRoomParticipantCreateRequest {
     private UUID chatRoomParticipantId;
     private UUID chatRoomId;
     private UUID userId;
-    private boolean isActive;
+    private String participantStatus;
 
     public ChatRoomParticipantDto toDto() {
         return ChatRoomParticipantDto.of(
             this.chatRoomParticipantId
             , this.chatRoomId
             , this.userId
-            , this.isActive
+            , ParticipantStatusEnum.getParticipantStatusEnum(this.participantStatus)
         );
     }
 }

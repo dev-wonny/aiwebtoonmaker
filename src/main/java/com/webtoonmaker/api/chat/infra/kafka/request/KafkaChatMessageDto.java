@@ -1,13 +1,15 @@
 package com.webtoonmaker.api.chat.infra.kafka.request;
 
+import com.webtoonmaker.api.chat.application.dto.BaseTimeDto;
 import com.webtoonmaker.api.chat.domain.enums.MessageTypeEnum;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-public class KafkaChatMessageDto {
+public class KafkaChatMessageDto extends BaseTimeDto {
     private UUID chatMessageId;//메시지 고유 ID (PK)
     private UUID chatRoomId;//채팅방 ID (FK), 객체지향으로 할까 말까?
     private UUID senderId;  // 보낸 사람
@@ -21,12 +23,16 @@ public class KafkaChatMessageDto {
         , UUID senderId
         , String content
         , MessageTypeEnum messageTypeEnum
+        , LocalDateTime createdAt
+        , LocalDateTime updatedAt
     ) {
         this.chatMessageId = chatMessageId;
         this.chatRoomId = chatRoomId;
         this.senderId = senderId;
         this.content = content;
         this.messageTypeEnum = messageTypeEnum;
+        this.setCreatedAt(createdAt);
+        this.setUpdatedAt(updatedAt);
     }
 
     public static KafkaChatMessageDto of(
@@ -35,6 +41,8 @@ public class KafkaChatMessageDto {
         , UUID senderId
         , String content
         , MessageTypeEnum messageTypeEnum
+        , LocalDateTime createdAt
+        , LocalDateTime updatedAt
     ) {
         return KafkaChatMessageDto.builder()
             .chatMessageId(chatMessageId)
@@ -42,6 +50,8 @@ public class KafkaChatMessageDto {
             .senderId(senderId)
             .content(content)
             .messageTypeEnum(messageTypeEnum)
+            .createdAt(createdAt)
+            .updatedAt(updatedAt)
             .build();
     }
 }

@@ -45,6 +45,6 @@ public class ChatMessageService {
     }
 
     public ChatMessageResponseDto getChatMessage(UUID chatMessageId) {
-        return ChatMessageResponseDto.fromMessage(getChatMessagesEntity(chatMessageId));
+        return ChatMessageResponseDto.fromEntity(getChatMessagesEntity(chatMessageId));
     }
 }

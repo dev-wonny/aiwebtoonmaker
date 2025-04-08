@@ -1,7 +1,6 @@
 package com.webtoonmaker.api.chat.application.dto;
 
 import com.webtoonmaker.api.chat.domain.enums.MessageTypeEnum;
-import com.webtoonmaker.api.chat.infra.kafka.request.KafkaChatMessageDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ChatMessageDto {
+public class ChatMessageDto extends BaseTimeDto {
     private UUID chatMessageId;//메시지 고유 ID (PK)
     private UUID chatRoomId;//채팅방 ID (FK), 객체지향으로 할까 말까?
     private UUID senderId;  // 보낸 사람

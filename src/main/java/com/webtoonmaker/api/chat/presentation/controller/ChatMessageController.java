@@ -3,6 +3,9 @@ package com.webtoonmaker.api.chat.presentation.controller;
 import com.webtoonmaker.api.chat.application.service.ChatMessageService;
 import com.webtoonmaker.api.chat.presentation.request.ChatMessageCreateRequest;
 import com.webtoonmaker.api.chat.presentation.response.ChatMessageResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+@Tag(name = "채팅 메시지 API", description = "채팅방 내 메시지 전송 관련 API")
 
 @RestController
 @RequestMapping("/chat-room-messages/v1")
@@ -23,8 +27,18 @@ public class ChatMessageController {
         this.chatMessageService = chatMessageService;
     }
 
+    @Operation(summary = "채팅 메시지 전송", description = "채팅방에 메시지를 전송합니다.")
     @PostMapping("/{chatRoomId}/messages")
-    public ResponseEntity<ChatMessageResponseDto> sendMessage(@PathVariable UUID chatRoomId, @Valid @RequestBody ChatMessageCreateRequest req) {
+    public ResponseEntity<ChatMessageResponseDto> sendMessage(
+        @Parameter(description = "채팅방 UUID", required = true) @PathVariable UUID chatRoomId
+        , @Valid @RequestBody ChatMessageCreateRequest req
+    ) {
         return ResponseEntity.ok(chatMessageService.create(chatRoomId, req.toDto()));
     }
+
+    //채팅방 메시지 목록 조회
+
+    //특정 메시지 수정
+
+    //메시지 삭제
 }
