@@ -28,8 +28,8 @@ public class ChatRoomService {
         UsersEntity userEntity = userService.getUserEntity(dto.getOwnerId());
 
         // 서비스 레이어에서 UUID 생성
-        final UUID userId = dto.getChatRoomId() != null ? dto.getChatRoomId() : UUID.randomUUID();
-        dto.createId(userId);
+        final UUID chatRoomId = dto.getChatRoomId() != null ? dto.getChatRoomId() : UUID.randomUUID();
+        dto.createId(chatRoomId);
 
         ChatRoomsEntity chatRoom = ChatRoomsEntity.create(
             dto.getChatRoomId()
@@ -38,10 +38,12 @@ public class ChatRoomService {
             , dto.getRoomType()
         );
 
-        return getChatRoom(chatRoomRepository.save(chatRoom).getChatRoomId());
+        ChatRoomsEntity saved = chatRoomRepository.save(chatRoom);
+
+        return ChatRoomResponseDto.fromChatRoom(saved);
     }
 
-    @Transactional(readOnly = true)
+    //    @Transactional(readOnly = true)
     public ChatRoomResponseDto getChatRoom(UUID chatRoomId) {
         ChatRoomsEntity chatRoom = getChatRoomEntity(chatRoomId);
         return ChatRoomResponseDto.fromChatRoom(chatRoom);
