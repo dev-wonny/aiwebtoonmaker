@@ -52,8 +52,8 @@ public class ChatRoomsEntity extends BaseEntity {
     private List<ChatRoomParticipantsEntity> chatParticipants = new ArrayList<>();
 
     //종속, 저장X
-    @OneToMany(mappedBy = "ChatMessagesEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<ChatMessagesEntity> chatMessages = new ArrayList<>();
+//    @OneToMany(mappedBy = "ChatMessages", cascade = CascadeType.REMOVE, orphanRemoval = true)//?? 이건 무슨관계지
+//    private List<ChatMessagesEntity> chatMessages = new ArrayList<>();
 
     @Builder
     private ChatRoomsEntity(
@@ -62,14 +62,14 @@ public class ChatRoomsEntity extends BaseEntity {
         , UsersEntity ownerId
         , ChatTypeEnum roomType
         , List<ChatRoomParticipantsEntity> chatParticipants
-        , List<ChatMessagesEntity> chatMessages
+//        , List<ChatMessagesEntity> chatMessages
     ) {
         this.chatRoomId = chatRoomId;
         this.chatRoomName = chatRoomName;
         this.ownerId = ownerId;
         this.roomType = roomType;
         this.chatParticipants = chatParticipants;
-        this.chatMessages = chatMessages;
+//        this.chatMessages = chatMessages;
     }
 
     public static ChatRoomsEntity create(

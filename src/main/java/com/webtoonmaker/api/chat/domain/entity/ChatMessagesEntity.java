@@ -31,6 +31,10 @@ public class ChatMessagesEntity extends BaseEntity {
     @Column(name = "chat_room_id", nullable = false)
     private UUID chatRoomId;//채팅방 ID (FK), 객체지향으로 할까 말까?
 
+//    @ManyToOne
+//    @JoinColumn(name = "chat_room_id", nullable = false)
+//    private ChatRoomsEntity chatRoom;
+
     @Column(name = "sender_id", nullable = false)
     private UUID senderId;  // 메시지 보낸 사용자
 

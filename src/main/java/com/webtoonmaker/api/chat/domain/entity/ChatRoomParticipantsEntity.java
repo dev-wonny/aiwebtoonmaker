@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -42,9 +43,40 @@ public class ChatRoomParticipantsEntity extends BaseEntity {
 
     //주인, 저장O
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UsersEntity userId;//FK
+    @JoinColumn(name = "participant_id", nullable = false)
+    private UsersEntity participant;//FK
 
     @Column(name = "is_active", nullable = false)
     private boolean isActive;//퇴장 여부
+
+    @Builder
+    private ChatRoomParticipantsEntity(
+        UUID chatRoomParticipantId
+        , ChatRoomsEntity chatRoom
+        , UsersEntity participant
+        , boolean isActive
+    ) {
+        this.chatRoomParticipantId = chatRoomParticipantId;
+        this.chatRoom = chatRoom;
+        this.participant = participant;
+        this.isActive = isActive;
+    }
+
+    public static ChatRoomParticipantsEntity create(
+        UUID chatRoomParticipantId
+        , ChatRoomsEntity chatRoom
+        , UsersEntity user
+        , boolean isActive
+    ) {
+        return ChatRoomParticipantsEntity.builder()
+            .chatRoomParticipantId(chatRoomParticipantId)
+            .chatRoom(chatRoom)
+            .participant(user)
+            .isActive(isActive)
+            .build();
+    }
+
+    public void updateActive(boolean isActive) {
+        this.isActive = isActive;
+    }
 }
