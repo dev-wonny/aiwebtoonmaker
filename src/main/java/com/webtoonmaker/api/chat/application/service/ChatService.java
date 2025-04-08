@@ -69,7 +69,7 @@ public class ChatService {
         }
 
         //참여자가 맞는지 체크
-        if (!chatRoomParticipantService.isActiveParticipantInRoom(dto.getChatRoomId(), dto.getSenderId())) {
+        if (!chatRoomParticipantService.isActiveParticipantInRoom(dto.getChatRoomId(), dto.getSenderId(), ParticipantStatusEnum.JOINED)) {
             return false;
         }
 
@@ -89,7 +89,7 @@ public class ChatService {
         }
         UsersEntity userEntity = userService.getUserEntity(userId);
 
-        return chatRoomParticipantService.isActiveParticipantInRoom(chatRoomId, userEntity.getUserId());
+        return chatRoomParticipantService.isActiveParticipantInRoom(chatRoomId, userEntity.getUserId(), ParticipantStatusEnum.JOINED);
     }
 
 

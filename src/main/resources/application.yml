@@ -1,9 +1,9 @@
 spring:
     datasource:
         driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://localhost:5432/webtoonmaker
-        username: postgres
-        password: secret
+        url: jdbc:postgresql://localhost:5432/aiwebtoonmaker
+        username: aiwebtoonmaker
+        password: aiwebtoonmaker
     jpa:
         hibernate:
             ddl-auto: create
@@ -20,7 +20,12 @@ spring:
             host: redis
             port: 6379
     kafka:
-        bootstrap-servers: kafka:9092
+        bootstrap-servers: localhost:9092
+        consumer:
+            group-id: chat-consumer
+            auto-offset-reset: earliest
+            key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     websocket:
         broker:
             enabled: true

@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public interface ChatRoomJpaRepository extends JpaRepository<ChatRoomsEntity, UUID>, ChatRoomRepository {
     boolean existsByChatRoomId(UUID chatRoomId);
-    boolean existsByChatRoom_ChatRoomIdAndIsDeletedFalse(UUID chatRoomId);
+    boolean existsByChatRoomIdAndIsDeletedFalse(UUID chatRoomId);
 
 
     Optional<ChatRoomsEntity> findByChatRoomId(UUID chatRoomId);

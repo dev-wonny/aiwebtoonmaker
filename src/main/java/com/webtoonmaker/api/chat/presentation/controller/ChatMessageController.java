@@ -8,12 +8,14 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @Tag(name = "채팅 메시지 API", description = "채팅방 내 메시지 전송 관련 API")
@@ -37,6 +39,11 @@ public class ChatMessageController {
     }
 
     //채팅방 메시지 목록 조회
+    @Operation(summary = "채팅방 메시지 List 조회", description = "채팅방 메시지 List 조회")
+    @GetMapping("/{chatRoomId}/messages")
+    public ResponseEntity<List<ChatMessageResponseDto>> getListChatMessage(UUID chatRoomId) {
+        return ResponseEntity.ok(chatMessageService.getListChatMessage(chatRoomId));
+    }
 
     //특정 메시지 수정
 

@@ -4,6 +4,7 @@ import com.webtoonmaker.api.chat.application.repository.ChatMessageRepository;
 import com.webtoonmaker.api.chat.domain.entity.ChatMessagesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -13,4 +14,7 @@ import java.util.UUID;
  */
 //@Primary
 public interface ChatMessageJpaRepository extends JpaRepository<ChatMessagesEntity, UUID>, ChatMessageRepository, ChatMessageCustomRepository {
+    //    List<ChatMessagesEntity> findByChatRoom_ChatRoomIdOrderByCreatedAtDesc(UUID chatRoomId);
+    List<ChatMessagesEntity> findByChatRoomIdOrderByCreatedAtDesc(UUID chatRoomId);
+
 }

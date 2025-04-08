@@ -11,7 +11,7 @@ import java.util.UUID;
  * Domain Interface (Application Layer)
  */
 public interface ChatMessageRepository {
-    List<ChatMessagesEntity> findRecentMessagesByRoomId(UUID roomId, int limit);
+    List<ChatMessagesEntity> findByChatRoomIdOrderByCreatedAtDesc(UUID chatRoomId);
 
     Optional<ChatMessagesEntity> findById(UUID chatMessageId); // 이거 추가해줘야 함
 

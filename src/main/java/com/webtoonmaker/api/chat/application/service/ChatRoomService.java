@@ -48,7 +48,7 @@ public class ChatRoomService {
     }
 
     public boolean isValidByChatRoomId(UUID chatRoomId) {
-        return chatRoomRepository.existsByChatRoom_ChatRoomIdAndIsDeletedFalse(chatRoomId);
+        return chatRoomRepository.existsByChatRoomIdAndIsDeletedFalse(chatRoomId);
     }
 
     public ChatRoomsEntity getChatRoomEntity(UUID chatRoomId) {

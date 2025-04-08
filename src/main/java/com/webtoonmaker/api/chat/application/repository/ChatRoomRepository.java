@@ -11,7 +11,7 @@ public interface ChatRoomRepository {
 
     boolean existsByChatRoomId(UUID chatRoomId);
 
-    boolean existsByChatRoom_ChatRoomIdAndIsDeletedFalse(UUID chatRoomId);
+    boolean existsByChatRoomIdAndIsDeletedFalse(UUID chatRoomId);
 
 
     List<ChatRoomsEntity> findAll();

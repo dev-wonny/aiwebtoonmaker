@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -46,5 +47,13 @@ public class ChatMessageService {
 
     public ChatMessageResponseDto getChatMessage(UUID chatMessageId) {
         return ChatMessageResponseDto.fromEntity(getChatMessagesEntity(chatMessageId));
+    }
+
+    public List<ChatMessageResponseDto> getListChatMessage(UUID chatRoomId) {
+        List<ChatMessagesEntity> list = chatMessageRepository.findByChatRoomIdOrderByCreatedAtDesc(chatRoomId);
+        return list.stream()
+            .map(entity -> ChatMessageResponseDto.fromEntity(entity))
+            .distinct() // 중복 제거
+            .toList();
     }
 }

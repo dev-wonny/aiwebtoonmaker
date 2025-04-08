@@ -63,16 +63,16 @@ public class ChatRoomParticipantService {
         return ChatRoomParticipantResponseDto.fromEntity(getChatRoomParticipantEntity(saved.getChatRoomParticipantId()));
     }
 
-    public boolean isActiveParticipantInRoom(UUID chatRoomId, UUID userId) {
-        return participantRepository.existsByChatRoomIdAndParticipantIdAndIsActiveTrueAndIsDeletedFalse(chatRoomId, userId);
+    public boolean isActiveParticipantInRoom(UUID chatRoomId, UUID userId, ParticipantStatusEnum status) {
+        return participantRepository.existsByChatRoom_ChatRoomIdAndParticipant_UserIdAndStatusAndIsDeletedFalse(chatRoomId, userId, status);
     }
 
     public boolean isRoomPaticipant(UUID chatRoomId, UUID userId) {
-        return participantRepository.existsByChatRoomIdAndUserIdAndIsDeletedFalse(chatRoomId, userId);
+        return participantRepository.existsByChatRoom_ChatRoomIdAndParticipant_UserIdAndIsDeletedFalse(chatRoomId, userId);
     }
 
     private ChatRoomParticipantsEntity getChatRoomParticipantEntity(UUID chatRoomParticipantId) {
-        return participantRepository.findByIdAndIsDeletedFalse(chatRoomParticipantId)
+        return participantRepository.findByChatRoomParticipantIdAndIsDeletedFalse(chatRoomParticipantId)
             .orElseThrow(() -> new EntityNotFoundException("chatRoomParticipantId: " + chatRoomParticipantId));
 
     }
@@ -101,9 +101,9 @@ public class ChatRoomParticipantService {
             .orElseThrow(() -> new EntityNotFoundException("chatRoomId:" + chatRoomId + ", userId:" + userId));
     }
 
-    public ChatRoomParticipantsEntity getChatRoomParticipantEntityByChatRoomIdAndUserIdAndIsActive(UUID chatRoomId, UUID userId, boolean isActive) {
-        return participantRepository.findByChatRoom_ChatRoomIdAndParticipant_UserIdAndIsActiveAndIsDeletedFalse(chatRoomId, userId, isActive)
-            .orElseThrow(() -> new EntityNotFoundException("chatRoomId:" + chatRoomId + ", userId:" + userId + ", isActive:" + isActive));
+    public ChatRoomParticipantsEntity getChatRoomParticipantEntityByChatRoomIdAndUserIdAndParticipantStatus(UUID chatRoomId, UUID userId, ParticipantStatusEnum participantStatus) {
+        return participantRepository.findByChatRoom_ChatRoomIdAndParticipant_UserIdAndStatusAndIsDeletedFalse(chatRoomId, userId, participantStatus)
+            .orElseThrow(() -> new EntityNotFoundException("chatRoomId:" + chatRoomId + ", userId:" + userId + ", participantStatusEnum:" + participantStatus));
     }
 
 
@@ -111,7 +111,7 @@ public class ChatRoomParticipantService {
         ChatRoomResponseDto chatRoom = chatRoomService.getChatRoom(chatRoomId);
         UserResponseDto user = userService.getUser(userId);
 
-        ChatRoomParticipantsEntity participant = getChatRoomParticipantEntityByChatRoomIdAndUserIdAndIsActive(chatRoom.getChatRoomId(), user.getUserId(), true);
+        ChatRoomParticipantsEntity participant = getChatRoomParticipantEntityByChatRoomIdAndUserId(chatRoom.getChatRoomId(), user.getUserId());
         participant.leaveRoom();
     }
 }
