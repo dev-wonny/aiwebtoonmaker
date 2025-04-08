@@ -12,7 +12,8 @@ import java.util.UUID;
  */
 public interface ChatMessageRepository {
     List<ChatMessagesEntity> findRecentMessagesByRoomId(UUID roomId, int limit);
+
     Optional<ChatMessagesEntity> findById(UUID chatMessageId); // 이거 추가해줘야 함
 
-    void save(ChatMessagesEntity chatMessage);// 추가하면 ChatMessageRepositoryImpl에서 save를 구현해야함
+    ChatMessagesEntity save(ChatMessagesEntity chatMessage);// 추가하면 ChatMessageRepositoryImpl에서 save를 구현해야함
 }

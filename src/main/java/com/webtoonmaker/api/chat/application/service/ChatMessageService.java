@@ -34,9 +34,9 @@ public class ChatMessageService {
         );
 
         // DB 저장
-        chatMessageRepository.save(chatMessage);
+        ChatMessagesEntity save = chatMessageRepository.save(chatMessage);
 
-        return getChatMessage(chatMessageId);
+        return getChatMessage(save.getChatMessageId());
     }
 
     public ChatMessagesEntity getChatMessagesEntity(UUID chatMessageId) {

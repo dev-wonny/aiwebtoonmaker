@@ -37,7 +37,8 @@ public class ChatRoomService {
             , userEntity
             , dto.getRoomType()
         );
-        return ChatRoomResponseDto.fromChatRoom(chatRoom);
+
+        return getChatRoom(chatRoomRepository.save(chatRoom).getChatRoomId());
     }
 
     @Transactional(readOnly = true)

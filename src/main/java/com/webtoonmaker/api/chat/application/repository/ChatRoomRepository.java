@@ -7,9 +7,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ChatRoomRepository {
-    Optional<ChatRoomsEntity> save(ChatRoomsEntity entity);
+    ChatRoomsEntity save(ChatRoomsEntity entity);
 
     boolean existsByChatRoomId(UUID chatRoomId);
+
     boolean existsByChatRoom_ChatRoomIdAndIsDeletedFalse(UUID chatRoomId);
 
 
