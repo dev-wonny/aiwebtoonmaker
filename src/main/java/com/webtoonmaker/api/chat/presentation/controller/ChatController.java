@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
-@Tag(name = "실시간 채팅 API", description = "채팅방 생성, 목록 조회, 메시지 전송 API")
+@Tag(name = "통합 실시간 채팅 API", description = "채팅방 생성, 목록 조회, 메시지 전송 API")
 @RestController
 @RequestMapping("/chat")
 @RequiredArgsConstructor

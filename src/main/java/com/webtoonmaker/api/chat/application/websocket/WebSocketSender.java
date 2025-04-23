@@ -24,6 +24,7 @@ public class WebSocketSender {
     /**
      * Spring은 WebSocket 연결 시 user 정보까지 매핑해줄 수 있어서
      * 특정 사용자한테만 보내는 것도 쉽게 가능
+     * 1:1 알림, 귓속말
      */
     public void sendToUser(String userId, Object payload) {
         messagingTemplate.convertAndSendToUser(userId, "/queue/messages", payload);
