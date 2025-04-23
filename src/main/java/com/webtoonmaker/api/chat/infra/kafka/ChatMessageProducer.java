@@ -11,8 +11,7 @@ public class ChatMessageProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final JsonConverter jsonConverter;
 
-    public void sendMessage(String topic, String key, Object message) {
-        final String payload = jsonConverter.toJson(message);
-        kafkaTemplate.send(topic, key, payload);
+    public void sendMessage(String topic, String key, String message) {
+        kafkaTemplate.send(topic, key, message);
     }
 }
