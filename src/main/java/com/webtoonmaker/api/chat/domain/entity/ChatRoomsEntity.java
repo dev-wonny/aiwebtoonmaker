@@ -17,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.ArrayList;
@@ -31,6 +32,10 @@ import java.util.UUID;
 public class ChatRoomsEntity extends BaseEntity {
     @Id
     @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+        name = "UUID",
+        strategy = "org.hibernate.id.UUIDGenerator"
+    )
     @Column(name = "chat_room_id", updatable = false, nullable = false, unique = true)
     private UUID chatRoomId;
 
@@ -73,13 +78,11 @@ public class ChatRoomsEntity extends BaseEntity {
     }
 
     public static ChatRoomsEntity create(
-        UUID chatRoomId
-        , String chatRoomName
+        String chatRoomName
         , UsersEntity ownerId
         , ChatTypeEnum roomType
     ) {
         return ChatRoomsEntity.builder()
-            .chatRoomId(chatRoomId)
             .chatRoomName(chatRoomName)
             .ownerId(ownerId)
             .roomType(roomType)

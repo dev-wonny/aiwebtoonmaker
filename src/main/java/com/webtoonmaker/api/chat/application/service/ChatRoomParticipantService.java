@@ -34,6 +34,7 @@ public class ChatRoomParticipantService {
         UsersEntity userEntity = userService.getUserEntity(dto.getUserId());
 
         // 참여한 이력 여부 체크
+        //참여 중이라면, 기존 데이터 반환
         if (isRoomPaticipant(chatRoomEntity.getChatRoomId(), userEntity.getUserId())) {
             // 기존 데이터 반환
             ChatRoomParticipantsEntity chatRoomParticipantEntity = getChatRoomParticipantEntityByChatRoomIdAndUserId(chatRoomEntity.getChatRoomId(), userEntity.getUserId());
@@ -47,14 +48,10 @@ public class ChatRoomParticipantService {
             return ChatRoomParticipantResponseDto.fromEntity(chatRoomParticipantEntity);
         }
 
-        // 서비스 레이어에서 UUID 생성
-        final UUID chatRoomParticipantId = dto.getChatRoomParticipantId() != null ? dto.getChatRoomParticipantId() : UUID.randomUUID();
-        dto.createId(chatRoomParticipantId);
-
+        // 채팅방에 참여
         ChatRoomParticipantsEntity saved = participantRepository.save(
             ChatRoomParticipantsEntity.create(
-                dto.getChatRoomParticipantId()
-                , chatRoomEntity
+                chatRoomEntity
                 , userEntity
                 , dto.getParticipantStatus()
             )

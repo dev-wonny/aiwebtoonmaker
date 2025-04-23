@@ -62,14 +62,12 @@ public class ChatMessagesEntity extends BaseEntity {
 
 
     public static ChatMessagesEntity create(
-        UUID chatMessageId
-        , UUID chatRoomId
+        UUID chatRoomId
         , UUID senderId
         , String content
         , MessageTypeEnum messageType
     ) {
         return ChatMessagesEntity.builder()
-            .chatMessageId(chatMessageId)
             .chatRoomId(chatRoomId)
             .senderId(senderId)
             .content(content)

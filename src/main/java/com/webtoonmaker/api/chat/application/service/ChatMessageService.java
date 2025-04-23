@@ -22,22 +22,17 @@ public class ChatMessageService {
     }
 
     public ChatMessageResponseDto create(UUID chatRoomId, ChatMessageDto dto) {
-        // 서비스 레이어에서 UUID 생성
-        final UUID chatMessageId = dto.getChatMessageId() != null ? dto.getChatMessageId() : UUID.randomUUID();
-        dto.createId(chatMessageId);
-
         ChatMessagesEntity chatMessage = ChatMessagesEntity.create(
-            dto.getChatMessageId()
-            , chatRoomId
+            chatRoomId
             , dto.getSenderId()
             , dto.getContent()
             , dto.getMessageTypeEnum()
         );
 
         // DB 저장
-        ChatMessagesEntity save = chatMessageRepository.save(chatMessage);
+        ChatMessagesEntity saved = chatMessageRepository.save(chatMessage);
 
-        return getChatMessage(save.getChatMessageId());
+        return getChatMessage(saved.getChatMessageId());
     }
 
     public ChatMessagesEntity getChatMessagesEntity(UUID chatMessageId) {

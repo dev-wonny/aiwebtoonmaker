@@ -27,13 +27,8 @@ public class ChatRoomService {
         //사용자 검증
         UsersEntity userEntity = userService.getUserEntity(dto.getOwnerId());
 
-        // 서비스 레이어에서 UUID 생성
-        final UUID chatRoomId = dto.getChatRoomId() != null ? dto.getChatRoomId() : UUID.randomUUID();
-        dto.createId(chatRoomId);
-
         ChatRoomsEntity chatRoom = ChatRoomsEntity.create(
-            dto.getChatRoomId()
-            , dto.getChatRoomName()
+            dto.getChatRoomName()
             , userEntity
             , dto.getRoomType()
         );

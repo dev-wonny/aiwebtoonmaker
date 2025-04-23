@@ -70,13 +70,11 @@ public class ChatRoomParticipantsEntity extends BaseEntity {
     }
 
     public static ChatRoomParticipantsEntity create(
-        UUID chatRoomParticipantId
-        , ChatRoomsEntity chatRoom
+        ChatRoomsEntity chatRoom
         , UsersEntity user
         , ParticipantStatusEnum status
     ) {
         return ChatRoomParticipantsEntity.builder()
-            .chatRoomParticipantId(chatRoomParticipantId)
             .chatRoom(chatRoom)
             .participant(user)
             .status(status)
